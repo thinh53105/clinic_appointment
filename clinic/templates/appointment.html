@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-  Market Page
+    Appointment Page
 {% endblock %}
 
 {% block content %}
@@ -9,23 +9,23 @@
             <tr>
                 <!-- Your Columns HERE -->
                 <th scope="col">ID</th>
+                <th scope="col">Code</th>
                 <th scope="col">Name</th>
-                <th scope="col">Barcode</th>
-                <th scope="col">Price</th>
+                <th scope="col">Address</th>
                 <th scope="col">Options</th>
             </tr>
         </thead>
         <tbody>
             <!-- Your rows inside the table HERE: -->
-            {% for item in items %}
+            {% for department in departments %}
                 <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.barcode }}</td>
-                    <td>{{ item.price }}$</td>
+                    <td>{{ department.id }}</td>
+                    <td>{{ department.code }}</td>
+                    <td>{{ department.name }}</td>
+                    <td>{{ department.address }}</td>
                     <td>
-                        <button class="btn btn-outline btn-info">More Info</button>
-                        <button class="btn btn-outline btn-success">Purchase this Item</button>
+                        <button class="btn btn-outline btn-info">See Appointments List</button>
+                        <button class="btn btn-outline btn-success">Make An Appointment</button>
                     </td>
                 </tr>
             {% endfor %}

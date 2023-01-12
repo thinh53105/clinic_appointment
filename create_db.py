@@ -1,11 +1,13 @@
-from market import app, db
-from market.models import Item
+from clinic import app, db
+from clinic.models import Department
 
 with app.app_context():
     db.drop_all()
     db.create_all()
-    item1 = Item(name="Iphone10", price=500, barcode="123", description="Iphone 10 haha")
-    db.session.add(item1)
+    dep1 = Department(code="hcmc", name="Ho Chi Minh Department", address="Ho Chi Minh City, Vietnam")
+    dep2 = Department(code="hanoi", name="Ha Noi Department", address="Ha Noi, Vietnam")
+    db.session.add(dep1)
+    db.session.add(dep2)
     db.session.commit()
     
-    print(Item.query.all())
+    print(Department.query.all())

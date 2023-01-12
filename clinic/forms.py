@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, DateTimeField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
-from market.models import User
+from clinic.models import User
 
 
 class RegisterForm(FlaskForm):
@@ -26,3 +26,13 @@ class LoginForm(FlaskForm):
     username = StringField(label='User Name:', validators=[DataRequired()])
     password = PasswordField(label='Password:', validators=[DataRequired()])
     submit = SubmitField(label='Sign in')
+
+
+class BookingForm(FlaskForm):
+    department = StringField(label='Booking Location:', validators=[DataRequired()])
+    start_time = DateTimeField(label='Start Time', validators=[DataRequired()])
+    end_time = DateTimeField(label='End Time', validators=[DataRequired()])
+    category = StringField(label='Category', validators=[DataRequired()])
+    message = StringField(label='Message', validators=[DataRequired()])
+    submit = SubmitField(label='Submit')
+    
