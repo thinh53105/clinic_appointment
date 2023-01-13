@@ -59,6 +59,7 @@ def logout_page():
 
 
 @app.route('/details/<string:code>')
+@login_required
 def details_page(code):
     cur_department = Department.query.filter_by(code=code).first()
     appointments = (
@@ -71,6 +72,7 @@ def details_page(code):
 
 
 @app.route('/booking/<string:code>', methods=['GET', 'POST'])
+@login_required
 def booking_page(code):
     form = BookingForm()
     if form.validate_on_submit():
