@@ -61,7 +61,12 @@ def logout_page():
 @app.route('/details/<string:code>')
 def details_page(code):
     cur_department = Department.query.filter_by(code=code).first()
-    appointments = Appointment.query.filter_by(department_id=cur_department.id).all()
+    appointments = (
+        Appointment.query
+            .filter_by(department_id=cur_department.id)
+            .filter(Appointment.start_time > datetime.now())
+            .order_by(Appointment.start_time)
+    )
     return render_template('details.html', appointments=appointments, code=code)
 
 
