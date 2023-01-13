@@ -1,7 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateTimeField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
-from clinic.models import User
+from clinic.models import User, Appointment
+from datetime import datetime, timedelta
+from clinic import db
+from flask_login import current_user
 
 
 class RegisterForm(FlaskForm):
@@ -35,4 +38,38 @@ class BookingForm(FlaskForm):
     category = StringField(label='Category', validators=[DataRequired()])
     message = StringField(label='Message', validators=[DataRequired()])
     submit = SubmitField(label='Submit')
+    
+    def validate_start_time(self, start_time):
+        if start_time.data < datetime.now():
+            raise ValidationError('Start time must not be in the past!')
+    
+    def validate_end_time(self, end_time):
+        if end_time.data < datetime.now():
+            raise ValidationError('End time must not be in the past!')
+    
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+        duration = self.end_time.data - self.start_time.data
+        if not (timedelta(minutes=30) <= duration <= timedelta(hours=3)):
+            self.end_time.errors.append("Duration must be from 30 minutes to 3 hours")
+            return False
+        con1 = Appointment.query \
+            .filter(Appointment.start_time <= self.start_time.data) \
+            .filter(self.start_time.data <= Appointment.end_time).first()
+        
+        con2 = Appointment.query \
+            .filter(Appointment.start_time <= self.end_time.data) \
+            .filter(self.end_time.data <= Appointment.end_time).first()
+        
+        con3 = Appointment.query \
+            .filter(Appointment.start_time >= self.end_time.data) \
+            .filter(self.end_time.data >= Appointment.end_time).first()
+        
+        print(con1, con2, con3)
+        if any((con1, con2, con3)):
+            self.end_time.errors.append("Confict in time, someone already have an appointment is this duration!")
+            return False
+        return True
     

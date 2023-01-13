@@ -4,6 +4,7 @@ from clinic.models import Department, User, Appointment
 from clinic.forms import RegisterForm, LoginForm, BookingForm
 from clinic import db
 from flask_login import login_user, logout_user, login_required, current_user
+from datetime import datetime
 
 @app.route('/')
 @app.route('/home')
@@ -57,15 +58,30 @@ def logout_page():
     return redirect(url_for("home_page"))
 
 
-@app.route('/booking', methods=['GET', 'POST'])
-def booking_page():
+@app.route('/details/<string:code>')
+def details_page(code):
+    cur_department = Department.query.filter_by(code=code).first()
+    appointments = Appointment.query.filter_by(department_id=cur_department.id).all()
+    return render_template('details.html', appointments=appointments, code=code)
+
+
+@app.route('/booking/<string:code>', methods=['GET', 'POST'])
+def booking_page(code):
     form = BookingForm()
     if form.validate_on_submit():
+        cur_department = Department.query.filter_by(code=code).first()
+        if cur_department is None:
+            flash(f'Department code {code} does not exists', category='danger')
+            return render_template('booking.html', form=form, code=code, time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        
+        department_id = cur_department.id
         appointment_to_create = Appointment(
             user_id=current_user.get_id(),
-            department_id=form.department.data,
+            department_id=department_id,
             start_time=form.start_time.data,
-            end_time=form.end_time.data
+            end_time=form.end_time.data,
+            category=form.category.data,
+            message=form.message.data
         )
         db.session.add(appointment_to_create)
         db.session.commit()
@@ -75,4 +91,6 @@ def booking_page():
         for err_msg in form.errors.values():
             flash(f'There was an error when make appointment: {err_msg}', category='danger')
 
-    return render_template('booking.html', form=form)
+    start_time = form.start_time.data or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    end_time  = form.end_time.data or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return render_template('booking.html', form=form, code=code, start_time=start_time, end_time=end_time)

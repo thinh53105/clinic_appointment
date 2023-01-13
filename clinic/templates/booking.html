@@ -13,13 +13,13 @@
             </h1>
             <br>
             {{ form.department.label() }}
-            {{ form.department(class="form-control", placeholder="Location") }}
+            {{ form.department(class="form-control", value=code) }}
 
             {{ form.start_time.label() }}
-            {{ form.start_time(class="form-control", placeholder="Start Time") }}
+            {{ form.start_time(class="form-control", value=start_time) }}
 
             {{ form.end_time.label() }}
-            {{ form.end_time(class="form-control", placeholder="End Time") }}
+            {{ form.end_time(class="form-control", value=end_time) }}
 
             {{ form.category.label() }}
             {{ form.category(class="form-control", placeholder="Category") }}

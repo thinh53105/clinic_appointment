@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+    Appointment Details
+{% endblock %}
+{% block content %}
+        Appointment Details for {{ code }}
+        <br/>
+      <a class="btn btn-primary" href="{{ url_for('booking_page', code=code) }}">Make an Appointment</a>
+      <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">User</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+            {% for app in appointments %}
+                <tr>
+                    <td>{{ app.id }}</td>
+                    <td>{{ app.user_id }}</td>
+                    <td>{{ app.start_time }}</td>
+                    <td>{{ app.end_time }}</td>
+                    <td>{{ app.category }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

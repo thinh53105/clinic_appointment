@@ -24,8 +24,8 @@
                     <td>{{ department.name }}</td>
                     <td>{{ department.address }}</td>
                     <td>
-                        <button class="btn btn-outline btn-info">See Appointments List</button>
-                        <button class="btn btn-outline btn-success">Make An Appointment</button>
+                        <a class="btn btn-primary" href="{{ url_for('details_page', code=department.code) }}">See Appointments Details</a>
+                        <a class="btn btn-primary" href="{{ url_for('booking_page', code=department.code) }}">Make an Appointment</a>
                     </td>
                 </tr>
             {% endfor %}
