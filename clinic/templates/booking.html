@@ -9,11 +9,9 @@
         <form method="POST" class="form-register" style="color:white">
             {{ form.hidden_tag() }}
             <h1 class="h3 mb-3 font-weight-normal">
-                Booking and Appointment
+                Booking and Appointment in {{ code}} Department
             </h1>
             <br>
-            {{ form.department.label() }}
-            {{ form.department(class="form-control", value=code) }}
 
             {{ form.client_name.label() }}
             {{ form.client_name(class="form-control", placeholder="Client Name") }}

@@ -32,7 +32,6 @@ class LoginForm(FlaskForm):
 
 
 class BookingForm(FlaskForm):
-    department = StringField(label='Booking Location:', validators=[DataRequired()])
     client_name = StringField(label='Client Name:', validators=[DataRequired()])
     client_phone = StringField(label='Client Phone:')
     start_time = DateTimeField(label='Start Time', validators=[DataRequired()])
