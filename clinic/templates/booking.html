@@ -33,9 +33,16 @@
 
             <br>
 
+            
+
             {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
 
         </form>
+
+        <br>
+
+        <a class="btn btn-primary" href="{{ url_for('details_page', code=code) }}">Back to Appointments Details</a>
+
     </div>
 </body>
 {% endblock %}
