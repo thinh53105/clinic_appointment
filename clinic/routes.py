@@ -64,8 +64,8 @@ def details_page(code):
     appointments = (
         Appointment.query
             .filter_by(department_id=cur_department.id)
-            .filter(Appointment.start_time > datetime.now())
-            .order_by(Appointment.start_time)
+            .filter(Appointment.end_time > datetime.now())
+            .order_by(Appointment.end_time)
     )
     return render_template('details.html', appointments=appointments, code=code)
 
@@ -82,6 +82,8 @@ def booking_page(code):
         department_id = cur_department.id
         appointment_to_create = Appointment(
             user_id=current_user.get_id(),
+            client_name=form.client_name.data,
+            client_phone=form.client_phone.data,
             department_id=department_id,
             start_time=form.start_time.data,
             end_time=form.end_time.data,

@@ -42,6 +42,8 @@ class Appointment(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     department_id = db.Column(db.Integer(), db.ForeignKey('department.id'))
+    client_name = db.Column(db.String(length=64), nullable=False)
+    client_phone = db.Column(db.String(length=12))
     start_time = db.Column(db.DateTime(), nullable=False)
     end_time = db.Column(db.DateTime(), nullable=False)
     category = db.Column(db.String(length=32), nullable=False)
