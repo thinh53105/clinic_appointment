@@ -27,8 +27,8 @@
                     <td>{{ app.user_id }}</td>
                     <td>{{ app.client_name }}</td>
                     <td>{{ app.client_phone }}</td>
-                    <td>{{ app.start_time }}</td>
-                    <td>{{ app.end_time }}</td>
+                    <td>{{ app.start_time.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                    <td>{{ app.end_time.strftime("%Y-%m-%d %H:%M:%S") }}</td>
                     <td>{{ app.category }}</td>
                 </tr>
             {% endfor %}

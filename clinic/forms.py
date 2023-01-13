@@ -65,7 +65,7 @@ class BookingForm(FlaskForm):
             .filter(self.end_time.data <= Appointment.end_time).first()
         
         con3 = Appointment.query \
-            .filter(Appointment.start_time >= self.end_time.data) \
+            .filter(Appointment.start_time >= self.start_time.data) \
             .filter(self.end_time.data >= Appointment.end_time).first()
         
         print(con1, con2, con3)
