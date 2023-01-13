@@ -67,8 +67,7 @@ class BookingForm(FlaskForm):
         con3 = Appointment.query \
             .filter(Appointment.start_time >= self.start_time.data) \
             .filter(self.end_time.data >= Appointment.end_time).first()
-        
-        print(con1, con2, con3)
+
         if any((con1, con2, con3)):
             self.end_time.errors.append("Confict in time, someone already have an appointment is this duration!")
             return False
